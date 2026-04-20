@@ -1,9 +1,17 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div class="flex justify-center pb-4">
+    <h1 class="text-3xl text-white">Overwatch Hero Level Tracker</h1>
+  </div>
+  <div class="flex justify-center">
+    <GoalForm />
+  </div>
+  <SummaryBar />
+  <div>
+    <HeroGrid />
+  </div>
 </template>
+<script setup lang="ts">
+import SummaryBar from './components/summary-bar.vue'
+import GoalForm from './components/goal-form.vue'
+import HeroGrid from './components/hero-grid.vue'
+</script>
