@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-5 gap-4 p-4">
     <div
-      v-for="hero in heroes"
+      v-for="hero in filteredHeroes"
       :key="hero.id"
       class="bg-gray-700 text-white rounded-lg shadow-lg p-4 flex flex-col items-center"
     >
@@ -18,13 +18,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import heroData from '@/data/heroes.json'
+import { computed } from 'vue'
 import { useGlobalsStore } from '@/stores/globals-store'
 import heroLevelStepper from './hero-level-stepper.vue'
 import heroProgressBar from './hero-progress-bar.vue'
-import type { Hero } from '@/types'
 
 const globalsStore = useGlobalsStore()
-const progress = globalsStore.heroProgress
-const heroes = heroData as Hero[]
+const progress = computed(() => globalsStore.heroProgress)
+const filteredHeroes = computed(() => globalsStore.filteredHeroes)
 </script>

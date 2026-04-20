@@ -7,6 +7,12 @@
   </div>
   <SummaryBar />
   <div>
+    <GridFilters />
+  </div>
+  <div class="flex justify-center">
+    <GridSortBy />
+  </div>
+  <div>
     <HeroGrid />
   </div>
 </template>
@@ -14,4 +20,6 @@
 import SummaryBar from './components/summary-bar.vue'
 import GoalForm from './components/goal-form.vue'
 import HeroGrid from './components/hero-grid.vue'
+import GridFilters from './components/grid-filters.vue'
+import GridSortBy from './components/grid-sort-by.vue'
 </script>
