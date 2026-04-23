@@ -6,10 +6,8 @@
     <GoalForm />
   </div>
   <SummaryBar />
-  <div>
+  <div class="flex justify-center items-center">
     <GridFilters />
-  </div>
-  <div class="flex justify-center">
     <GridSortBy />
   </div>
   <div>

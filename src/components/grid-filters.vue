@@ -10,58 +10,72 @@
     >
       All
     </button>
+    <div class="border-gray-600 rounded-full border-2">
+      <button
+        type="button"
+        @click="toggleFilter('below-goal')"
+        class="mr-2"
+        :class="[
+          'rounded-full border px-4 py-2 text-sm font-semibold transition',
+          selectedFilters.includes('below-goal') ? activeClasses : inactiveClasses,
+        ]"
+      >
+        Below goal
+      </button>
 
-    <button
-      type="button"
-      @click="toggleFilter('below-goal')"
-      :class="[
-        'rounded-full border px-4 py-2 text-sm font-semibold transition',
-        selectedFilters.includes('below-goal') ? activeClasses : inactiveClasses,
-      ]"
-    >
-      Below goal
-    </button>
+      <button
+        type="button"
+        @click="toggleFilter('above-goal')"
+        :class="[
+          'rounded-full border px-4 py-2 text-sm font-semibold transition',
+          selectedFilters.includes('above-goal') ? activeClasses : inactiveClasses,
+        ]"
+      >
+        Above goal
+      </button>
+    </div>
 
-    <button
-      type="button"
-      @click="toggleFilter('tank')"
-      :class="[
-        'rounded-full border px-4 py-2 text-sm font-semibold transition',
-        selectedFilters.includes('tank') ? activeClasses : inactiveClasses,
-      ]"
-    >
-      Tank
-    </button>
+    <div class="border-gray-600 rounded-full border-2">
+      <button
+        type="button"
+        @click="toggleFilter('tank')"
+        :class="[
+          'rounded-full border px-4 py-2 text-sm font-semibold transition',
+          selectedFilters.includes('tank') ? activeClasses : inactiveClasses,
+        ]"
+      >
+        Tank
+      </button>
 
-    <button
-      type="button"
-      @click="toggleFilter('damage')"
-      :class="[
-        'rounded-full border px-4 py-2 text-sm font-semibold transition',
-        selectedFilters.includes('damage') ? activeClasses : inactiveClasses,
-      ]"
-    >
-      Damage
-    </button>
+      <button
+        type="button"
+        @click="toggleFilter('damage')"
+        :class="[
+          'rounded-full border px-4 py-2 text-sm font-semibold transition mx-2',
+          selectedFilters.includes('damage') ? activeClasses : inactiveClasses,
+        ]"
+      >
+        Damage
+      </button>
 
-    <button
-      type="button"
-      @click="toggleFilter('support')"
-      :class="[
-        'rounded-full border px-4 py-2 text-sm font-semibold transition',
-        selectedFilters.includes('support') ? activeClasses : inactiveClasses,
-      ]"
-    >
-      Support
-    </button>
+      <button
+        type="button"
+        @click="toggleFilter('support')"
+        :class="[
+          'rounded-full border px-4 py-2 text-sm font-semibold transition',
+          selectedFilters.includes('support') ? activeClasses : inactiveClasses,
+        ]"
+      >
+        Support
+      </button>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useGlobalsStore } from '@/stores/globals-store'
-
-type HeroFilter = 'below-goal' | 'tank' | 'damage' | 'support'
+import type { HeroFilter } from '@/types'
 
 const globalsStore = useGlobalsStore()
 const selectedFilters = computed(() => globalsStore.selectedFilters)

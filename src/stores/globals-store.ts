@@ -1,19 +1,16 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import type { HeroProgress } from '@/types'
-import type { Hero } from '@/types'
+import type { HeroProgress, Hero, HeroFilter } from '@/types'
 import heroData from '@/data/heroes.json'
 
 const heroes = heroData as Hero[]
-
-type HeroFilter = 'below-goal' | 'tank' | 'damage' | 'support'
 
 export const useGlobalsStore = defineStore(
   'globals',
   () => {
     const goal = ref<number>(0)
     const heroProgress = ref<HeroProgress>({})
-    const heroCounter = ref<number>(heroes.length)
+    const heroCounter: number = heroes.length
     const selectedFilters = ref<HeroFilter[]>([])
     const sortBy = ref<string>('name')
 
@@ -40,8 +37,11 @@ export const useGlobalsStore = defineStore(
           const matchesBelowGoal = selectedFilters.value.includes('below-goal')
             ? (heroProgress.value[hero.id] ?? 0) < goal.value
             : true
+          const matchesAboveGoal = selectedFilters.value.includes('above-goal')
+            ? (heroProgress.value[hero.id] ?? 0) >= goal.value
+            : true
 
-          return matchesRole && matchesBelowGoal
+          return matchesRole && matchesBelowGoal && matchesAboveGoal
         })
       }
 
@@ -49,7 +49,7 @@ export const useGlobalsStore = defineStore(
         switch (sortBy.value) {
           case 'name':
             return a.name.localeCompare(b.name)
-          case 'role':
+          case 'name-desc':
             return b.name.localeCompare(a.name)
           case 'level':
             const levelA = heroProgress.value[a.id] ?? 0
@@ -70,10 +70,22 @@ export const useGlobalsStore = defineStore(
     const toggleFilter = (filter: HeroFilter) => {
       const current = selectedFilters.value
       const index = current.indexOf(filter)
-      if (index === -1) {
-        selectedFilters.value = [...current, filter]
+
+      // Handle exclusive goal filters
+      if (filter === 'above-goal' || filter === 'below-goal') {
+        const otherGoalFilter = filter === 'above-goal' ? 'below-goal' : 'above-goal'
+        if (index === -1) {
+          selectedFilters.value = [...current.filter((f) => f !== otherGoalFilter), filter]
+        } else {
+          selectedFilters.value = current.filter((f) => f !== filter)
+        }
       } else {
-        selectedFilters.value = current.filter((f) => f !== filter)
+        // Normal toggle for role filters
+        if (index === -1) {
+          selectedFilters.value = [...current, filter]
+        } else {
+          selectedFilters.value = current.filter((f) => f !== filter)
+        }
       }
     }
 

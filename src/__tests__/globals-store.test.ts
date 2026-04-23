@@ -52,6 +52,17 @@ describe('useGlobalsStore', () => {
     expect(filtered.every((hero) => (store.heroProgress[hero.id] ?? 0) < 10)).toBe(true)
   })
 
+  it('filters heroes above or at goal', () => {
+    const store = useGlobalsStore()
+    store.goal = 10
+    store.heroProgress = { ana: 5, reinhardt: 15, tracer: 10 }
+    store.selectedFilters = ['above-goal']
+
+    const filtered = store.filteredHeroes
+    expect(filtered.every((hero) => (store.heroProgress[hero.id] ?? 0) >= 10)).toBe(true)
+    expect(filtered.map((h) => h.id)).toEqual(['reinhardt', 'tracer']) // 15 and 10
+  })
+
   it('sorts heroes by name ascending', () => {
     const store = useGlobalsStore()
     store.sortBy = 'name'

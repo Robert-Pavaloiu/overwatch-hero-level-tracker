@@ -1,19 +1,18 @@
 <template>
-  <div>
-    <select
-      v-model="sortBy"
-      class="rounded border-white border px-4 py-2 text-sm font-semibold transition text-white bg-gray-700"
-    >
-      <option value="name">Alphabetical Ascending (A-Z)</option>
-      <option value="role">Alphabetical Descending (Z-A)</option>
-      <option value="level-desc">Level Highest to Lowest</option>
-      <option value="level">Level Lowest to Highest</option>
-    </select>
-  </div>
+  <SortDropdown
+    v-model="sortBy"
+    :options="[
+      { value: 'name', label: 'Alphabetical Ascending (A-Z)' },
+      { value: 'name-desc', label: 'Alphabetical Descending (Z-A)' },
+      { value: 'level-desc', label: 'Level Highest to Lowest' },
+      { value: 'level', label: 'Level Lowest to Highest' },
+    ]"
+  />
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useGlobalsStore } from '@/stores/globals-store'
+import SortDropdown from './sort-dropdown.vue'
 
 const globalsStore = useGlobalsStore()
 const sortBy = computed({

@@ -13,12 +13,13 @@ describe('GridFilters', () => {
     const wrapper = mount(GridFilters)
     const buttons = wrapper.findAll('button')
 
-    expect(buttons).toHaveLength(5)
+    expect(buttons).toHaveLength(6)
     expect(buttons[0]!.text()).toBe('All')
     expect(buttons[1]!.text()).toBe('Below goal')
-    expect(buttons[2]!.text()).toBe('Tank')
-    expect(buttons[3]!.text()).toBe('Damage')
-    expect(buttons[4]!.text()).toBe('Support')
+    expect(buttons[2]!.text()).toBe('Above goal')
+    expect(buttons[3]!.text()).toBe('Tank')
+    expect(buttons[4]!.text()).toBe('Damage')
+    expect(buttons[5]!.text()).toBe('Support')
   })
 
   it('applies active classes when filter is selected', async () => {
@@ -28,14 +29,14 @@ describe('GridFilters', () => {
     store.selectedFilters = ['tank']
     await wrapper.vm.$nextTick()
 
-    const tankButton = wrapper.findAll('button')[2] // Tank button
+    const tankButton = wrapper.findAll('button')[3] // Tank button
     expect(tankButton!.classes()).toContain('bg-white')
     expect(tankButton!.classes()).toContain('text-slate-900')
   })
 
   it('applies inactive classes when filter is not selected', () => {
     const wrapper = mount(GridFilters)
-    const tankButton = wrapper.findAll('button')[2]
+    const tankButton = wrapper.findAll('button')[3]
 
     expect(tankButton!.classes()).toContain('bg-slate-800')
     expect(tankButton!.classes()).toContain('text-slate-200')
@@ -44,7 +45,7 @@ describe('GridFilters', () => {
   it('toggles filter on button click', async () => {
     const store = useGlobalsStore()
     const wrapper = mount(GridFilters)
-    const tankButton = wrapper.findAll('button')[2]
+    const tankButton = wrapper.findAll('button')[3]
 
     await tankButton!.trigger('click')
     expect(store.selectedFilters).toEqual(['tank'])
