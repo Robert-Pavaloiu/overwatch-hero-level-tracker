@@ -20,15 +20,3 @@ const sortBy = computed({
   set: (value) => (globalsStore.sortBy = value),
 })
 </script>
-
-<style scoped>
-select option {
-  background-color: #374151;
-  color: white;
-}
-
-select option:checked {
-  background: linear-gradient(#374151, #374151);
-  background-color: #4b5563;
-}
-</style>

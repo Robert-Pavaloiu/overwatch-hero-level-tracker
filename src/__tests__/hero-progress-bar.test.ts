@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils'
 import { setActivePinia, createPinia } from 'pinia'
 import HeroProgressBar from '@/components/hero-progress-bar.vue'
 import { useGlobalsStore } from '@/stores/globals-store'
+import type { HeroProgressBarInstance } from '@/types'
 
 describe('HeroProgressBar', () => {
   beforeEach(() => {
@@ -20,13 +21,12 @@ describe('HeroProgressBar', () => {
       },
     })
 
-    expect(wrapper.text()).toContain('0%')
+    expect(wrapper.text()).toContain('Complete!')
   })
 
   it('calculates progress correctly', () => {
     const store = useGlobalsStore()
     store.goal = 10
-    store.heroProgress = { ana: 5 }
 
     const wrapper = mount(HeroProgressBar, {
       props: {
@@ -35,13 +35,12 @@ describe('HeroProgressBar', () => {
       },
     })
 
-    expect(wrapper.text()).toContain('50%')
+    expect(wrapper.text()).toContain('5 to go')
   })
 
   it('caps progress at 100%', () => {
     const store = useGlobalsStore()
     store.goal = 10
-    store.heroProgress = { ana: 15 }
 
     const wrapper = mount(HeroProgressBar, {
       props: {
@@ -50,7 +49,7 @@ describe('HeroProgressBar', () => {
       },
     })
 
-    expect(wrapper.text()).toContain('100%')
+    expect(wrapper.text()).toContain('Complete!')
   })
 
   it('applies green color when complete', async () => {
@@ -67,7 +66,7 @@ describe('HeroProgressBar', () => {
 
     await wrapper.vm.$nextTick()
     // Check the computed property directly
-    expect((wrapper.vm as any).progressColour).toBe('bg-green-500')
+    expect((wrapper.vm as unknown as HeroProgressBarInstance).progressColour).toBe('bg-green-500')
   })
 
   it('applies blue color for high progress', async () => {
@@ -83,7 +82,7 @@ describe('HeroProgressBar', () => {
     })
 
     await wrapper.vm.$nextTick()
-    expect((wrapper.vm as any).progressColour).toBe('bg-blue-500')
+    expect((wrapper.vm as unknown as HeroProgressBarInstance).progressColour).toBe('bg-blue-500')
   })
 
   it('applies yellow color for medium progress', async () => {
@@ -99,7 +98,7 @@ describe('HeroProgressBar', () => {
     })
 
     await wrapper.vm.$nextTick()
-    expect((wrapper.vm as any).progressColour).toBe('bg-yellow-400')
+    expect((wrapper.vm as unknown as HeroProgressBarInstance).progressColour).toBe('bg-yellow-400')
   })
 
   it('applies red color for low progress', async () => {
@@ -115,6 +114,6 @@ describe('HeroProgressBar', () => {
     })
 
     await wrapper.vm.$nextTick()
-    expect((wrapper.vm as any).progressColour).toBe('bg-red-400')
+    expect((wrapper.vm as unknown as HeroProgressBarInstance).progressColour).toBe('bg-red-400')
   })
 })

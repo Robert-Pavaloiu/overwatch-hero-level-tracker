@@ -9,35 +9,42 @@ describe('GridSortBy', () => {
     setActivePinia(createPinia())
   })
 
-  it('renders select with options', () => {
+  it('renders dropdown with options', () => {
     const wrapper = mount(GridSortBy)
-    const select = wrapper.find('select')
+    const button = wrapper.find('button')
 
-    expect(select.exists()).toBe(true)
-    expect(select.findAll('option')).toHaveLength(4)
+    expect(button.exists()).toBe(true)
+    expect(wrapper.findComponent({ name: 'SortDropdown' }).exists()).toBe(true)
   })
 
   it('displays correct option text', () => {
     const wrapper = mount(GridSortBy)
-    const options = wrapper.findAll('option')
+    const button = wrapper.find('button')
 
-    expect(options).toHaveLength(4)
-    expect(options[0]!.text()).toBe('Alphabetical Ascending (A-Z)')
-    expect(options[1]!.text()).toBe('Alphabetical Descending (Z-A)')
-    expect(options[2]!.text()).toBe('Level Highest to Lowest')
-    expect(options[3]!.text()).toBe('Level Lowest to Highest')
+    expect(button.text()).toContain('Alphabetical Ascending (A-Z)')
   })
 
   it('binds to store sortBy', async () => {
     const store = useGlobalsStore()
     const wrapper = mount(GridSortBy)
-    const select = wrapper.find('select')
 
-    await select.setValue('level-desc')
+    // Click the button to open the dropdown
+    const button = wrapper.find('button')
+    await button.trigger('click')
+    await wrapper.vm.$nextTick()
+
+    // Find and click the "Level Highest to Lowest" option
+    const options = wrapper.findAll('button')
+    const levelDescOption = options.find((opt) => opt.text().includes('Level Highest to Lowest'))
+    expect(levelDescOption).toBeDefined()
+
+    await levelDescOption?.trigger('click')
+    await wrapper.vm.$nextTick()
+
     expect(store.sortBy).toBe('level-desc')
 
-    store.sortBy = 'name'
-    await wrapper.vm.$nextTick()
-    expect(select.element.value).toBe('name')
+    // Verify the button now shows the new selection
+    const updatedButton = wrapper.find('button')
+    expect(updatedButton.text()).toContain('Level Highest to Lowest')
   })
 })

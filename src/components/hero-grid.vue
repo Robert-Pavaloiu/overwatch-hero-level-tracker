@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
-    <hero-card v-for="hero in filteredHeroes" :key="hero.id" :hero="hero" data-testid="hero-card" />
+    <hero-card v-for="hero in filteredHeroes" :key="hero.id" :hero="hero" />
   </div>
 </template>
 

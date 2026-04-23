@@ -21,7 +21,7 @@ describe('SummaryBar', () => {
     expect(wrapper.text()).toContain('In Progress')
     expect(wrapper.text()).toContain('1') // reinhardt has 5 < 10
     expect(wrapper.text()).toContain('Not Started')
-    expect(wrapper.text()).toContain('49') // tracer + 48 others at 0, but wait, 51-1-1=49? Wait, total 51, completed 1, in progress 1, not started 49.
+    expect(wrapper.text()).toContain('49') // 51 total - 1 completed - 1 in progress = 49 not started
     expect(wrapper.text()).toContain('Total Heroes')
     expect(wrapper.text()).toContain('51')
   })

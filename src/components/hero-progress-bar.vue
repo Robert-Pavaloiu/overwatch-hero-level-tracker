@@ -26,16 +26,17 @@ const globalsStore = useGlobalsStore()
 
 const progress = computed(() => {
   if (globalsStore.goal === 0) return 0
-  return Math.min(((globalsStore.heroProgress[props.heroId] || 0) / globalsStore.goal) * 100, 100)
+  return Math.min((props.level / globalsStore.goal) * 100, 100)
 })
 
 const progressNumber = computed(() => {
-  return globalsStore.goal - (globalsStore.heroProgress[props.heroId] || 0)
+  return globalsStore.goal - props.level
 })
 
 const isComplete = computed(() => {
-  return (globalsStore.heroProgress[props.heroId] || 0) >= globalsStore.goal
+  return props.level >= globalsStore.goal
 })
+
 const progressColour = computed(() => {
   if (progress.value >= 100) return 'bg-green-500'
   if (progress.value >= 60) return 'bg-blue-500'

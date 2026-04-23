@@ -4,21 +4,12 @@ import { setActivePinia, createPinia } from 'pinia'
 import HeroGrid from '@/components/hero-grid.vue'
 import { useGlobalsStore } from '@/stores/globals-store'
 
-// Mock child components
-vi.mock('@/components/hero-level-stepper.vue', () => ({
+// Mock hero-card component
+vi.mock('@/components/hero-card.vue', () => ({
   default: {
-    name: 'HeroLevelStepper',
-    template: '<div>Stepper</div>',
-    props: ['heroId', 'level'],
-    emits: ['update'],
-  },
-}))
-
-vi.mock('@/components/hero-progress-bar.vue', () => ({
-  default: {
-    name: 'HeroProgressBar',
-    template: '<div>ProgressBar</div>',
-    props: ['heroId', 'level'],
+    name: 'HeroCard',
+    template: '<div data-testid="hero-card">HeroCard</div>',
+    props: ['hero'],
   },
 }))
 
@@ -29,43 +20,60 @@ describe('HeroGrid', () => {
 
   it('renders hero cards for filtered heroes', () => {
     const wrapper = mount(HeroGrid)
-    const heroCards = wrapper.findAll('.bg-gray-700')
+    const heroCards = wrapper.findAll('[data-testid="hero-card"]')
 
     expect(heroCards.length).toBeGreaterThan(0)
   })
 
-  it('displays hero name and role', () => {
+  it('passes hero object to each card', () => {
     const wrapper = mount(HeroGrid)
-    const firstCard = wrapper.findAll('.bg-gray-700')[0]
+    const cards = wrapper.findAllComponents({ name: 'HeroCard' })
 
-    expect(firstCard!.text()).toContain('Stepper')
-    expect(firstCard!.text()).toContain('ProgressBar')
+    expect(cards.length).toBeGreaterThan(0)
+    cards.forEach((card) => {
+      expect(card.props('hero')).toBeDefined()
+      expect(card.props('hero').id).toBeDefined()
+      expect(card.props('hero').name).toBeDefined()
+    })
   })
 
-  it('passes correct props to stepper and progress bar', () => {
+  it('filters heroes based on store state', () => {
     const store = useGlobalsStore()
-    store.heroProgress = { ana: 5 }
+    store.selectedFilters = ['tank']
 
     const wrapper = mount(HeroGrid)
+    const cards = wrapper.findAllComponents({ name: 'HeroCard' })
 
-    // Since we mocked the components, we can check if they receive props
-    const stepper = wrapper.findComponent({ name: 'HeroLevelStepper' })
-    expect(stepper.props('heroId')).toBeDefined()
-    expect(stepper.props('level')).toBeDefined()
-
-    const progressBar = wrapper.findComponent({ name: 'HeroProgressBar' })
-    expect(progressBar.props('heroId')).toBeDefined()
-    expect(progressBar.props('level')).toBeDefined()
+    cards.forEach((card) => {
+      expect(card.props('hero').role).toBe('tank')
+    })
   })
 
-  it('emits update when stepper updates', async () => {
-    const wrapper = mount(HeroGrid)
-    const stepper = wrapper.findComponent({ name: 'HeroLevelStepper' })
-
-    // Simulate stepper emit
-    await stepper.vm.$emit('update', 'ana', 10)
-
+  it('respects goal filters', () => {
     const store = useGlobalsStore()
-    expect(store.heroProgress.ana).toBe(10)
+    store.goal = 10
+    store.heroProgress = { ana: 15, widowmaker: 5 }
+    store.selectedFilters = ['above-goal']
+
+    const wrapper = mount(HeroGrid)
+    const cards = wrapper.findAllComponents({ name: 'HeroCard' })
+
+    // Should only show heroes that are above goal
+    const filteredHeroes = store.filteredHeroes
+    expect(cards.length).toBe(filteredHeroes.length)
+  })
+
+  it('updates card count when filters change', async () => {
+    const store = useGlobalsStore()
+    const wrapper = mount(HeroGrid)
+
+    const initialCards = wrapper.findAllComponents({ name: 'HeroCard' })
+    const initialCount = initialCards.length
+
+    store.selectedFilters = ['tank']
+    await wrapper.vm.$nextTick()
+
+    const filteredCards = wrapper.findAllComponents({ name: 'HeroCard' })
+    expect(filteredCards.length).toBeLessThanOrEqual(initialCount)
   })
 })

@@ -10,3 +10,7 @@ export interface Hero {
 export type HeroProgress = Record<string, number>
 
 export type HeroFilter = 'below-goal' | 'above-goal' | 'tank' | 'damage' | 'support'
+
+export interface HeroProgressBarInstance {
+  progressColour: string
+}

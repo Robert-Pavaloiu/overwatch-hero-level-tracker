@@ -1,5 +1,6 @@
 <template>
   <div
+    data-testid="hero-card"
     class="bg-gray-700 text-white rounded-lg shadow-lg p-4 flex flex-col items-center relative"
     :class="{
       'border-2 border-green-500': isComplete,
@@ -24,11 +25,7 @@
     </div>
     <h3 class="text-lg font-bold">{{ hero.name }}</h3>
     <p class="text-sm mb-2 capitalize">{{ hero.role }}</p>
-    <hero-level-stepper
-      :hero-id="hero.id"
-      :level="level"
-      @update="(id, level) => (globalsStore.heroProgress[id] = level)"
-    />
+    <hero-level-stepper :hero-id="hero.id" :level="level" @update="globalsStore.setLevel" />
     <hero-progress-bar :hero-id="hero.id" :level="level" />
   </div>
 </template>

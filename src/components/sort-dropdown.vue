@@ -16,7 +16,7 @@
         v-for="option in props.options"
         :key="option.value"
         @click="select(option.value)"
-        class="w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-700"
+        class="w-full text-right md:text-left px-4 py-2 text-sm text-white hover:bg-gray-700"
         :class="{
           'text-white font-semibold': option.value === props.modelValue,
           'text-gray-300': option.value !== props.modelValue,

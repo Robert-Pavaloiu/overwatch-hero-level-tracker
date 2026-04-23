@@ -15,9 +15,8 @@ export const useGlobalsStore = defineStore(
     const sortBy = ref<string>('name')
 
     const heroesCompleted = computed(() => {
-      return Object.keys(heroProgress.value).filter(
-        (heroId) => (heroProgress.value[heroId] ?? 0) >= goal.value,
-      ).length
+      if (goal.value === 0) return 0
+      return heroes.filter((hero) => (heroProgress.value[hero.id] ?? 0) >= goal.value).length
     })
 
     const heroesNotStarted = computed(() => {
@@ -51,14 +50,16 @@ export const useGlobalsStore = defineStore(
             return a.name.localeCompare(b.name)
           case 'name-desc':
             return b.name.localeCompare(a.name)
-          case 'level':
+          case 'level': {
             const levelA = heroProgress.value[a.id] ?? 0
             const levelB = heroProgress.value[b.id] ?? 0
             return levelA - levelB
-          case 'level-desc':
+          }
+          case 'level-desc': {
             const levelADesc = heroProgress.value[a.id] ?? 0
             const levelBDesc = heroProgress.value[b.id] ?? 0
             return levelBDesc - levelADesc
+          }
           default:
             return 0
         }
@@ -93,6 +94,10 @@ export const useGlobalsStore = defineStore(
       selectedFilters.value = []
     }
 
+    const setLevel = (heroId: string, level: number) => {
+      heroProgress.value[heroId] = level
+    }
+
     return {
       goal,
       heroProgress,
@@ -104,6 +109,7 @@ export const useGlobalsStore = defineStore(
       filteredHeroes,
       toggleFilter,
       clearFilters,
+      setLevel,
     }
   },
   {
