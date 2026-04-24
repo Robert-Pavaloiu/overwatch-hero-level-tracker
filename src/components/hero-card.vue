@@ -3,7 +3,7 @@
     data-testid="hero-card"
     class="bg-gray-700 text-white rounded-lg shadow-lg p-4 flex flex-col items-center relative"
     :class="{
-      'border-2 border-green-500': isComplete,
+      'outline-2 outline-green-500 outline-offset-0': isComplete,
       celebrate: celebrating,
     }"
   >
