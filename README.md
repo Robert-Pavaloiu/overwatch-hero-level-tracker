@@ -2,7 +2,7 @@ A personal hero progression tracker for Overwatch's Progression 2.0 system. Set 
 
 ![Image of the Tracker](image.png)
 
-🚀 **Live Demo**
+🚀 **[Live Demo](https://overwatch-hero-level-tracker.vercel.app)**
 
 ## Features
 

@@ -6,7 +6,7 @@
         v-model.number="goal"
         type="number"
         placeholder="Enter your goal"
-        min="0"
+        min="1"
         class="bg-gray-700 text-white placeholder:text-gray-400 border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </form>
