@@ -1,54 +1,104 @@
-# overwatch-hero-level-tracker
+A personal hero progression tracker for Overwatch's Progression 2.0 system. Set a target level, log your progress across all 51 heroes, and instantly see who still needs work — all from a clean, responsive interface.
 
-This template should help get you started developing with Vue 3 in Vite.
+🚀 **Live Demo**
 
-## Recommended IDE Setup
+## Features
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Goal setting** — set a target level and track all 51 heroes against it in real time
+- **Hero grid** — portrait, role, current level, and a colour-coded progress bar for every hero
+- **Completion indicator** — green border and checkmark on completed cards, with a brief bounce animation on reaching your goal
+- **Filtering** — filter by status (below goal / above goal) and role (tank, damage, support), combinable
+- **Sorting** — sort alphabetically (A–Z or Z–A) or by level (highest or lowest first)
+- **Summary bar** — at-a-glance count of heroes at goal, in progress, and not started
+- **Persistent data** — goal and all hero levels are saved to localStorage and survive page refreshes
 
-## Recommended Browser Setup
+## Tech Stack
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+| Layer            | Technology                          |
+| ---------------- | ----------------------------------- |
+| Framework        | Vue 3 (Composition API)             |
+| Language         | TypeScript                          |
+| State management | Pinia + pinia-plugin-persistedstate |
+| Styling          | Tailwind CSS v4                     |
+| Utilities        | VueUse                              |
+| Testing          | Vitest + Vue Test Utils             |
+| Build tool       | Vite                                |
+| Deployment       | Vercel                              |
 
-## Type Support for `.vue` Imports in TS
+## Getting Started
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+### Prerequisites
 
-## Customize configuration
+- Node.js (v18 or higher recommended)
+- npm
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### Installation
 
-## Project Setup
+```bash
+# Clone the repository
+git clone https://github.com/Robert-Pavaloiu/ow-hero-tracker.git
 
-```sh
+# Navigate into the project
+cd ow-hero-tracker
+
+# Install dependencies
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# Start the development server
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+The app will be running at `http://localhost:5173`
 
-```sh
-npm run build
-```
+### Running tests
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
+```bash
 npm run test:unit
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Building for production
 
-```sh
-npm run lint
+```bash
+npm run build
 ```
+
+## Project Structure
+
+```
+src/
+├── __tests__/          # Vitest unit tests
+├── assets/             # Global CSS
+├── components/
+│   ├── goal-form.vue             # Goal level input
+│   ├── grid-filters.vue          # Status and role filter buttons
+│   ├── grid-sort-by.vue          # Sort order selector
+│   ├── hero-card.vue             # Individual hero card with completion animation
+│   ├── hero-grid.vue             # Responsive hero card grid
+│   ├── hero-level-stepper.vue    # Level − / + input control
+│   ├── hero-progress-bar.vue     # Colour-coded progress bar
+│   ├── sort-dropdown.vue         # Custom pill-style dropdown
+│   └── summary-bar.vue           # At goal / in progress / not started counts
+├── data/
+│   └── heroes.json     # Static hero data (id, name, role, portrait URL)
+├── stores/
+│   └── globals-store.ts  # Pinia store — progress, filters, sorting, computed stats
+├── types.ts            # Shared TypeScript types
+├── App.vue
+└── main.ts
+```
+
+## Data Persistence
+
+This app has no backend. All data is persisted locally in the browser using `localStorage` via `pinia-plugin-persistedstate`. Data will persist indefinitely across sessions until browser storage is manually cleared. As a result, data is browser and device specific and will not sync across devices.
+
+Blizzard does not provide a public API for individual player hero progression levels, so levels are entered manually using the stepper on each card.
+
+## What's Built
+
+All core features are complete and functional:
+
+- Hero grid with real Blizzard CDN portraits across all 51 heroes
+- Manual level tracking with − / + stepper and direct input
+- Combinable filters by status and role
+- Completion state with visual indicator and card animation
+- Fully persistent progress via localStorage
