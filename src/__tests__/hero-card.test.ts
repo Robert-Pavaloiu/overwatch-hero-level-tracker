@@ -108,7 +108,7 @@ describe('HeroCard', () => {
     expect(svg.exists()).toBe(false)
   })
 
-  it('has green border when complete', async () => {
+  it('has green outline when complete', async () => {
     const store = useGlobalsStore()
     store.goal = 10
     store.heroProgress = { ana: 10 }
@@ -118,7 +118,7 @@ describe('HeroCard', () => {
     })
 
     await wrapper.vm.$nextTick()
-    expect(wrapper.classes()).toContain('border-green-500')
+    expect(wrapper.classes()).toContain('outline-green-500')
   })
 
   it('calls store.setLevel when stepper updates', async () => {
