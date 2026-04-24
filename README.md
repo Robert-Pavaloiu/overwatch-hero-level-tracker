@@ -1,8 +1,10 @@
 A personal hero progression tracker for Overwatch's Progression 2.0 system. Set a target level, log your progress across all 51 heroes, and instantly see who still needs work — all from a clean, responsive interface.
 
-![Image of the Tracker](image.png)
+## ![Vue](https://img.shields.io/badge/Vue-3-42b883?logo=vue.js) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript) ![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38bdf8?logo=tailwindcss) ![Vitest](https://img.shields.io/badge/Tested_with-Vitest-6e9f18?logo=vitest)
 
 🚀 **[Live Demo](https://overwatch-hero-level-tracker.vercel.app)**
+
+![Image of the Tracker](image.png)
 
 ## Features
 
