@@ -1,3 +1,4 @@
+/// <reference types="pinia-plugin-persistedstate" />
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { HeroProgress, Hero, HeroFilter } from '@/types'
