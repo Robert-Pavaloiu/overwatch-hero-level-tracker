@@ -12,7 +12,7 @@ describe('useGlobalsStore', () => {
 
     expect(store.goal).toBe(0)
     expect(store.heroProgress).toEqual({})
-    expect(store.heroCounter).toBe(51) // Actual number of heroes in data
+    expect(store.heroCounter).toBe(52) // Actual number of heroes in data
     expect(store.selectedFilters).toEqual([])
     expect(store.sortBy).toBe('name')
   })
@@ -30,8 +30,8 @@ describe('useGlobalsStore', () => {
     // Set progress for a few heroes, others default to 0
     store.heroProgress = { ana: 0, reinhardt: 5, tracer: 0 }
 
-    // Only reinhardt has progress > 0, so 50 heroes not started (51 - 1)
-    expect(store.heroesNotStarted).toBe(50)
+    // Only reinhardt has progress > 0, so 51 heroes not started (52 - 1)
+    expect(store.heroesNotStarted).toBe(51)
   })
 
   it('filters heroes by role', () => {
