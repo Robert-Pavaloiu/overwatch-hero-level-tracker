@@ -48,6 +48,12 @@
     "role": "tank"
   },
   {
+    "id": "doctrine",
+    "name": "Doctrine",
+    "portrait": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/2492a15c575c12314907d0d77501ec337b4d56796bc7f03e5dfb50d415612bae.png",
+    "role": "support"
+  },
+  {
     "id": "domina",
     "name": "Domina",
     "portrait": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/1161c112292c56c052c0ae711792fcde06e3251b98bc9709e582dd7585b5dcd6.png",
@@ -249,7 +255,7 @@
     "id": "sombra",
     "name": "Sombra",
     "portrait": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/47727b02a16e3bd7b2447d86ae1edf11587bc320b2aecb4f2f16a7ca4ad4e8a0.png",
-    "role": "damage"
+    "role": "support"
   },
   {
     "id": "symmetra",

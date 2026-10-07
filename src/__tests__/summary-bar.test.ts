@@ -21,9 +21,9 @@ describe('SummaryBar', () => {
     expect(wrapper.text()).toContain('In Progress')
     expect(wrapper.text()).toContain('1') // reinhardt has 5 < 10
     expect(wrapper.text()).toContain('Not Started')
-    expect(wrapper.text()).toContain('51') // 53 total - 1 completed - 1 in progress = 50 not started
+    expect(wrapper.text()).toContain('52') // 54 total - 1 completed - 1 in progress = 52 not started
     expect(wrapper.text()).toContain('Total Heroes')
-    expect(wrapper.text()).toContain('53')
+    expect(wrapper.text()).toContain('54')
   })
 
   it('renders four summary boxes', () => {
